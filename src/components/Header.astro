@@ -1,0 +1,30 @@
+---
+export interface Props {
+  onOpenArticle?: (article: string) => void;
+  timeout?: boolean;
+}
+
+const { timeout = false } = Astro.props;
+---
+
+<header id="header" style={timeout ? "display: none;" : ""}>
+  <div class="logo">
+    <img src="/images/isotipo.png" alt="O.D.I.A." />
+  </div>
+  <div class="content">
+    <div class="inner">
+      <h1>Observatorio de Derecho<br aria-hidden="true" />Informático Argentino</h1>
+      <p>Ámbito de intercambio y aprendizaje mutuo entre abogades e informátiques.</p>
+    </div>
+  </div>
+  <nav>
+    <ul>
+      <li><button data-article="quienes_somos">¿Quiénes somos?</button></li>
+      <li><button data-article="trabajo">Nuestro trabajo</button></li>
+      <li><button data-article="debates">Debates</button></li>
+      <li><button data-article="colaboracion">Colaboración</button></li>
+      <li><button onclick="location.href='https://marca.odia.legal/'">Marca</button></li>
+      <li><button data-article="redes_sociales">Redes Sociales</button></li>
+    </ul>
+  </nav>
+</header>

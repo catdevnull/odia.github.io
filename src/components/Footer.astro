@@ -1,0 +1,11 @@
+---
+export interface Props {
+  timeout?: boolean;
+}
+
+const { timeout = false } = Astro.props;
+---
+
+<footer id="footer" style={timeout ? "display: none;" : ""}>
+  <p class="copyright">&copy; O.D.I.A. Design: <a href="https://html5up.net">HTML5 UP</a>. Built with: <a href="https://astro.build">Astro</a></p>
+</footer>

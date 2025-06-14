@@ -1,0 +1,241 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="O.D.I.A.">
+  <div class="body" id="app">
+    <div id="wrapper">
+      <Header />
+      <div id="main" style="display: none;">
+        <!-- Articles will be populated by JavaScript -->
+        <article id="quienes_somos" style="display: none;">
+          <button class="close" aria-label="Cerrar" role="button"></button>
+          <div id="quienes_somos_content"></div>
+        </article>
+        
+        <article id="trabajo" style="display: none;">
+          <button class="close" aria-label="Cerrar" role="button"></button>
+          <div id="trabajo_content"></div>
+        </article>
+        
+        <article id="debates" style="display: none;">
+          <button class="close" aria-label="Cerrar" role="button"></button>
+          <div id="debates_content"></div>
+        </article>
+        
+        <article id="colaboracion" style="display: none;">
+          <button class="close" aria-label="Cerrar" role="button"></button>
+          <div id="colaboracion_content"></div>
+        </article>
+        
+        <article id="redes_sociales" style="display: none;">
+          <button class="close" aria-label="Cerrar" role="button"></button>
+          <h2 class="major">Redes Sociales</h2>
+          <ul class="icons">
+            <li><a href="https://instagram.com/odiaasoc" target="_blank">
+              <i class="fab fa-instagram" aria-label="instagram"></i>
+            </a></li>
+            <li><a href="https://twitter.com/odiaasoc" target="_blank">
+              <i class="fab fa-twitter" aria-label="twitter"></i>
+            </a></li>
+            <li><a href="https://www.facebook.com/ODIAasoc" target="_blank">
+              <i class="fab fa-facebook" aria-label="facebook"></i>
+            </a></li>
+            <li><a href="https://www.linkedin.com/company/odiaasoc/" target="_blank">
+              <i class="fab fa-linkedin" aria-label="linkedin"></i>
+            </a></li>
+            <li><a href="https://medium.com/@odiaasoc" target="_blank">
+              <i class="fab fa-medium" aria-label="medium"></i>
+            </a></li>
+            <li><a href="https://github.com/odia/" target="_blank">
+              <i class="fab fa-github" aria-label="github"></i>
+            </a></li>
+            <li><a href="https://t.me/odiaasoc" target="_blank">
+              <i class="fab fa-telegram" aria-label="telegram"></i>
+            </a></li>
+          </ul>
+        </article>
+      </div>
+      <Footer />
+    </div>
+    <div id="bg"></div>
+  </div>
+</Layout>
+
+<script>
+  // App state management
+  let isArticleVisible = false;
+  let timeout = false;
+  let articleTimeout = false;
+  let article = '';
+
+  // Markdown content (will be loaded dynamically)
+  const markdownContent = {};
+
+  // Load markdown content
+  async function loadMarkdownContent() {
+    try {
+      const [quienesSomos, trabajo, debates, colaboracion] = await Promise.all([
+        fetch('/content/quienes_somos.md').then(r => r.text()),
+        fetch('/content/trabajo.md').then(r => r.text()),
+        fetch('/content/debates.md').then(r => r.text()),
+        fetch('/content/colaboracion.md').then(r => r.text())
+      ]);
+      
+      markdownContent['quienes_somos'] = quienesSomos;
+      markdownContent['trabajo'] = trabajo;
+      markdownContent['debates'] = debates;
+      markdownContent['colaboracion'] = colaboracion;
+    } catch (error) {
+      console.error('Error loading markdown content:', error);
+    }
+  }
+
+  // Simple markdown renderer
+  function renderMarkdown(content) {
+    if (!content) return '';
+    
+    const lines = content.split('\n');
+    let html = '';
+    
+    lines.forEach(line => {
+      line = line.trim();
+      if (line.startsWith('# ')) {
+        html += `<h2 class="major">${line.substring(2)}</h2>`;
+      } else if (line.startsWith('## ')) {
+        html += `<h3>${line.substring(3)}</h3>`;
+      } else if (line.startsWith('### ')) {
+        html += `<h4>${line.substring(4)}</h4>`;
+      } else if (line.match(/!\[([^\]]*)\]\(([^)]+)\)/)) {
+        const match = line.match(/!\[([^\]]*)\]\(([^)]+)\)/);
+        html += `<img alt="${match[1]}" src="${match[2]}" />`;
+      } else if (line !== '') {
+        html += `<p>${line}</p>`;
+      }
+    });
+    
+    return html;
+  }
+
+  // Initialize app
+  document.addEventListener('DOMContentLoaded', async () => {
+    const body = document.querySelector('.body');
+    
+    // Load markdown content
+    await loadMarkdownContent();
+    
+    // Remove loading class after initialization
+    setTimeout(() => {
+      body?.classList.remove('is-loading');
+    }, 100);
+
+    // Handle navigation clicks
+    document.addEventListener('click', (event) => {
+      const target = event.target;
+      
+      if (target.tagName === 'BUTTON' && target.hasAttribute('data-article')) {
+        event.preventDefault();
+        const articleId = target.getAttribute('data-article');
+        if (articleId) {
+          openArticle(articleId);
+        }
+      }
+      
+      if (target.classList.contains('close')) {
+        event.preventDefault();
+        closeArticle();
+      }
+    });
+  });
+
+  function openArticle(articleId) {
+    const body = document.querySelector('.body');
+    const header = document.getElementById('header');
+    const footer = document.getElementById('footer');
+    const main = document.getElementById('main');
+    const targetArticle = document.getElementById(articleId);
+
+    isArticleVisible = !isArticleVisible;
+    article = articleId;
+
+    // Load content into article
+    if (markdownContent[articleId]) {
+      const contentDiv = document.getElementById(articleId + '_content');
+      if (contentDiv) {
+        contentDiv.innerHTML = renderMarkdown(markdownContent[articleId]);
+      }
+    }
+
+    // Update body class
+    if (body) {
+      body.classList.toggle('is-article-visible');
+    }
+
+    // Hide header and footer
+    setTimeout(() => {
+      if (header) header.style.display = 'none';
+      if (footer) footer.style.display = 'none';
+      timeout = !timeout;
+    }, 325);
+
+    // Show main and activate article
+    setTimeout(() => {
+      if (main) main.style.display = 'flex';
+      if (targetArticle) {
+        targetArticle.classList.add('active');
+        targetArticle.style.display = 'block';
+      }
+      articleTimeout = !articleTimeout;
+      
+      // Add timeout class to active article
+      document.querySelectorAll('article').forEach(art => {
+        if (art.id === articleId) {
+          art.classList.add('timeout');
+        }
+      });
+    }, 350);
+  }
+
+  function closeArticle() {
+    const body = document.querySelector('.body');
+    const header = document.getElementById('header');
+    const footer = document.getElementById('footer');
+    const main = document.getElementById('main');
+    const activeArticle = document.querySelector('article.active');
+
+    // Remove timeout class from articles
+    document.querySelectorAll('article').forEach(art => {
+      art.classList.remove('timeout');
+    });
+    
+    articleTimeout = !articleTimeout;
+
+    setTimeout(() => {
+      if (header) header.style.display = '';
+      if (footer) footer.style.display = '';
+      timeout = !timeout;
+    }, 325);
+
+    setTimeout(() => {
+      if (main) main.style.display = 'none';
+      if (activeArticle) {
+        activeArticle.classList.remove('active');
+        (activeArticle).style.display = 'none';
+      }
+      
+      isArticleVisible = !isArticleVisible;
+      article = '';
+      
+      // Update body class
+      if (body) {
+        body.classList.remove('is-article-visible');
+      }
+    }, 350);
+  }
+</script>
+
+<!-- FontAwesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</Layout>

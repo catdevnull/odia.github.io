@@ -1,38 +1,32 @@
 {
-  "name": "nextjs-dimension",
+  "name": "odia-astro",
+  "type": "module",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Observatorio de Derecho Informático Argentino - Astro SSG",
   "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start",
-    "export": "next build && next export"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "export": "astro build"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@fortawesome/fontawesome": "^1.1.5",
-    "@fortawesome/fontawesome-free-brands": "^5.0.10",
-    "@fortawesome/fontawesome-free-regular": "^5.0.10",
-    "@fortawesome/react-fontawesome": "0.0.18",
-    "autoprefixer": "^9.1.5",
-    "babel-loader": "^8.1.0",
-    "babel-plugin-module-resolver": "^3.1.1",
-    "babel-plugin-wrap-in-js": "^1.1.1",
-    "glob": "^7.1.3",
-    "next": "^9.5.2",
-    "node-sass": "^4.9.3",
-    "postcss-easy-import": "^3.0.0",
-    "postcss-loader": "^3.0.0",
-    "raw-loader": "^0.5.1",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "react-markdown": "^4.3.1",
-    "sass-loader": "^7.1.0"
+    "astro": "^5.9.3",
+    "@astrojs/react": "^4.0.0",
+    "@astrojs/mdx": "^4.0.0",
+    "@astrojs/sitemap": "^3.0.0",
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-brands-svg-icons": "^6.6.0",
+    "@fortawesome/free-regular-svg-icons": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sass": "^1.77.0"
   },
   "devDependencies": {
-    "babel-plugin-inline-import": "^3.0.0"
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "^5.5.4"
   }
 }

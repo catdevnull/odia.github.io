@@ -10,8 +10,8 @@ En base a esto iniciamos una acción para pedir la desconexión del sistema.
 
 Durante el Aislamiento Social Preventivo y Obligatorio por la epidemia de COVID-19, el Gobierno Nacional publicó la aplicación "CUID.AR" para monitorear el estado de salud de los ciudadanos y asistir en la obtención de permisos de circulación. Desde O.D.I.A. quisimos averiguar cómo funciona esta aplicación y cómo se guardan sus datos, que son considerados sensibles por su característica médica, demandando así una mayor protección.
 
-Decidimos preguntarle al Gobierno Nacional sobre el funcionamiento de este sistema, y [nos respondió](/static/documents/respuestas-cuidar.pdf), entre otras cosas, que guardaba los datos médicos sensibles en servidores fuera del país, en contra de lo que estipula la Ley de Protección de Datos Personales.
+Decidimos preguntarle al Gobierno Nacional sobre el funcionamiento de este sistema, y [nos respondió](/documents/respuestas-cuidar.pdf), entre otras cosas, que guardaba los datos médicos sensibles en servidores fuera del país, en contra de lo que estipula la Ley de Protección de Datos Personales.
 
 ## LEX-100
 
-El sistema que usa el Poder Judicial de la Nación, llamado LEX-100, es conocido por su mal funcionamiento. Con el objeto de incentivar su mejora, [hicimos preguntas](/static/documents/AIP%20-%20Lex.pdf) para conocer su estado y su perspectiva a futuro.
+El sistema que usa el Poder Judicial de la Nación, llamado LEX-100, es conocido por su mal funcionamiento. Con el objeto de incentivar su mejora, [hicimos preguntas](/documents/AIP%20-%20Lex.pdf) para conocer su estado y su perspectiva a futuro.

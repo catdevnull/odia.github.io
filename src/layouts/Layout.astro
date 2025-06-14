@@ -1,0 +1,47 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Ámbito de intercambio y aprendizaje mutuo entre abogades e informátiques." } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Observatorio de Derecho Informático Argentino" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content="https://odia.legal/" />
+    <meta property="og:site_name" content="Observatorio de Derecho Informático Argentino" />
+    <meta property="og:image" content="https://odia.legal/images/isotipo.png" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta property="twitter:image" content="https://odia.legal/images/isotipo.png" />
+    <meta property="twitter:title" content="Observatorio de Derecho Informático Argentino" />
+    <meta name="twitter:site" content="@odiaasoc" />
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,600,600i" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,600,600i" rel="stylesheet" />
+    
+    <link rel="canonical" href="https://odia.legal/" />
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+    
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global lang="scss">
+  @import "../styles/main.scss";
+</style>
